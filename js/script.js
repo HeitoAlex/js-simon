@@ -3,11 +3,11 @@ const divRandomElement = document.getElementById('numeri-random');
 const divUserElement = document.getElementById('numeri-utente');
 const divResults = document.getElementById('risultati')
 const numerToRemember = numberGenerator();
-const rememberedNumber = guess();
+// const rememberedNumber = guess();
 
 playElement.addEventListener('click', function(){
 
-    divGenerator()
+    spanGenerator()
     let timerSecond = Number.parseInt((30), 10);
 
     const timer = setInterval(function(){
@@ -20,10 +20,20 @@ playElement.addEventListener('click', function(){
         
     }, 1000);
 
-    setTimeout(guess, 30000);
+    setTimeout(function() {
+        const rememberedNumber = guess();
 
-        divUserElement.appendChild(userNumber);
-        divResults.appendChild(getMatch(numerToRemember, rememberedNumber));
+        /* 
+        let spanElm = document.getElementById('span');
+        spanElm.innerHTMl = rememberedNumber
+        aasdasdas.appendChild(spanElm);
+        */
+
+        divUserElement.append(rememberedNumber);
+        divResults.append(getMatch(numerToRemember, rememberedNumber));
+    }, 30000);
+
+    
 })
 
 
@@ -36,12 +46,14 @@ function numberGenerator(){
     let numbers = [];
     while(numbers.length < 5){
         const randomNumber = Math.floor(Math.random() * 100) + 1;
-        numbers.push(randomNumber);
+        if(!numbers.includes(randomNumber)){
+            numbers.push(randomNumber);
+        }
     }
     return numbers;
 }
 
-function divGenerator(){
+function spanGenerator(){
 
     let spanElement = document.createElement('span');
         spanElement.classList.add('square');
@@ -64,6 +76,14 @@ function guess(){
 
 function getMatch(elementA, elementB) {
     let matches = [];
+
+    /*
+        for ( let j = 0; j < elementA.length; j++ ) {
+            if(elementB.includes(elementA[j])) {
+                matches.push( elementA[j] );
+            }
+        }
+    */
 
     for ( let j = 0; j < elementA.length; j++ ) {
         for ( let e = 0; e < elementB.length; e++ ) {
